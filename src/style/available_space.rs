@@ -53,14 +53,14 @@ from_str_from_css!(AvailableSpace);
 impl AvailableSpace {
     /// Returns true for definite values, else false
     pub const fn is_definite(self) -> bool {
-        matches!(self, AvailableSpace::Definite(_))
+        matches!(self, Self::Definite(_))
     }
 
     /// Convert to Option
     /// Definite values become Some(value). Constraints become None.
     pub const fn into_option(self) -> Option<f32> {
         match self {
-            AvailableSpace::Definite(value) => Some(value),
+            Self::Definite(value) => Some(value),
             _ => None,
         }
     }
@@ -77,17 +77,17 @@ impl AvailableSpace {
     }
 
     /// Return self if definite or a default value
-    pub fn or(self, default: AvailableSpace) -> AvailableSpace {
+    pub fn or(self, default: Self) -> Self {
         match self {
-            AvailableSpace::Definite(_) => self,
+            Self::Definite(_) => self,
             _ => default,
         }
     }
 
     /// Return self if definite or a the result of the default value callback
-    pub fn or_else(self, default_cb: impl FnOnce() -> AvailableSpace) -> AvailableSpace {
+    pub fn or_else(self, default_cb: impl FnOnce() -> Self) -> Self {
         match self {
-            AvailableSpace::Definite(_) => self,
+            Self::Definite(_) => self,
             _ => default_cb(),
         }
     }
@@ -98,17 +98,17 @@ impl AvailableSpace {
     }
 
     /// If passed value is Some then return AvailableSpace::Definite containing that value, else return self
-    pub fn maybe_set(self, value: Option<f32>) -> AvailableSpace {
+    pub fn maybe_set(self, value: Option<f32>) -> Self {
         match value {
-            Some(value) => AvailableSpace::Definite(value),
+            Some(value) => Self::Definite(value),
             None => self,
         }
     }
 
     /// If passed value is Some then return AvailableSpace::Definite containing that value, else return self
-    pub fn map_definite_value(self, map_function: impl FnOnce(f32) -> f32) -> AvailableSpace {
+    pub fn map_definite_value(self, map_function: impl FnOnce(f32) -> f32) -> Self {
         match self {
-            AvailableSpace::Definite(value) => AvailableSpace::Definite(map_function(value)),
+            Self::Definite(value) => Self::Definite(map_function(value)),
             _ => self,
         }
     }
@@ -116,15 +116,15 @@ impl AvailableSpace {
     /// Compute free_space given the passed used_space
     pub fn compute_free_space(&self, used_space: f32) -> f32 {
         match self {
-            AvailableSpace::MaxContent => f32::INFINITY,
-            AvailableSpace::MinContent => 0.0,
-            AvailableSpace::Definite(available_space) => available_space - used_space,
+            Self::MaxContent => f32::INFINITY,
+            Self::MinContent => 0.0,
+            Self::Definite(available_space) => available_space - used_space,
         }
     }
 
     /// Compare equality with another AvailableSpace, treating definite values
     /// that are within f32::EPSILON of each other as equal
-    pub fn is_roughly_equal(self, other: AvailableSpace) -> bool {
+    pub fn is_roughly_equal(self, other: Self) -> bool {
         use AvailableSpace::*;
         match (self, other) {
             (Definite(a), Definite(b)) => abs(a - b) < f32::EPSILON,
@@ -157,7 +157,7 @@ impl Size<AvailableSpace> {
     }
 
     /// If passed value is Some then return AvailableSpace::Definite containing that value, else return self
-    pub fn maybe_set(self, value: Size<Option<f32>>) -> Size<AvailableSpace> {
-        Size { width: self.width.maybe_set(value.width), height: self.height.maybe_set(value.height) }
+    pub fn maybe_set(self, value: Size<Option<f32>>) -> Self {
+        Self { width: self.width.maybe_set(value.width), height: self.height.maybe_set(value.height) }
     }
 }

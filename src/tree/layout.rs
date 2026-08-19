@@ -61,7 +61,7 @@ impl CollapsibleMarginSet {
     }
 
     /// Collapse another margin set with this set
-    pub fn collapse_with_set(mut self, other: CollapsibleMarginSet) -> Self {
+    pub fn collapse_with_set(mut self, other: Self) -> Self {
         self.positive = f32_max(self.positive, other.positive);
         self.negative = f32_min(self.negative, other.negative);
         self
@@ -89,8 +89,8 @@ pub enum RequestedAxis {
 impl From<AbsoluteAxis> for RequestedAxis {
     fn from(value: AbsoluteAxis) -> Self {
         match value {
-            AbsoluteAxis::Horizontal => RequestedAxis::Horizontal,
-            AbsoluteAxis::Vertical => RequestedAxis::Vertical,
+            AbsoluteAxis::Horizontal => Self::Horizontal,
+            AbsoluteAxis::Vertical => Self::Vertical,
         }
     }
 }
@@ -98,8 +98,8 @@ impl TryFrom<RequestedAxis> for AbsoluteAxis {
     type Error = ();
     fn try_from(value: RequestedAxis) -> Result<Self, Self::Error> {
         match value {
-            RequestedAxis::Horizontal => Ok(AbsoluteAxis::Horizontal),
-            RequestedAxis::Vertical => Ok(AbsoluteAxis::Vertical),
+            RequestedAxis::Horizontal => Ok(Self::Horizontal),
+            RequestedAxis::Vertical => Ok(Self::Vertical),
             RequestedAxis::Both => Err(()),
         }
     }
@@ -148,7 +148,7 @@ pub struct LayoutInput {
 
 impl LayoutInput {
     /// A LayoutInput that can be used to request hidden layout
-    pub const HIDDEN: LayoutInput = LayoutInput {
+    pub const HIDDEN: Self = Self {
         // The important property for hidden layout
         run_mode: RunMode::PerformHiddenLayout,
         // The rest will be ignored

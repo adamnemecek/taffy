@@ -65,8 +65,8 @@ impl GridTrack {
         kind: GridTrackKind,
         min_track_sizing_function: MinTrackSizingFunction,
         max_track_sizing_function: MaxTrackSizingFunction,
-    ) -> GridTrack {
-        GridTrack {
+    ) -> Self {
+        Self {
             kind,
             is_collapsed: false,
             min_track_sizing_function,
@@ -86,12 +86,12 @@ impl GridTrack {
     pub const fn new(
         min_track_sizing_function: MinTrackSizingFunction,
         max_track_sizing_function: MaxTrackSizingFunction,
-    ) -> GridTrack {
+    ) -> Self {
         Self::new_with_kind(GridTrackKind::Track, min_track_sizing_function, max_track_sizing_function)
     }
 
     /// Create a new GridTrack representing a gutter
-    pub fn gutter(size: LengthPercentage) -> GridTrack {
+    pub fn gutter(size: LengthPercentage) -> Self {
         Self::new_with_kind(
             GridTrackKind::Gutter,
             MinTrackSizingFunction::from(size),

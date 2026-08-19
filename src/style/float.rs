@@ -46,9 +46,9 @@ impl Float {
     /// Converts [`Float`] into `Option<FloatDirection>`ca
     pub fn float_direction(&self) -> Option<FloatDirection> {
         match self {
-            Float::Left => Some(FloatDirection::Left),
-            Float::Right => Some(FloatDirection::Right),
-            Float::None => None,
+            Self::Left => Some(FloatDirection::Left),
+            Self::Right => Some(FloatDirection::Right),
+            Self::None => None,
         }
     }
 }

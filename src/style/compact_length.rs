@@ -446,10 +446,10 @@ impl CompactLength {
     pub fn is_max_content_alike(&self) -> bool {
         matches!(
             self.tag(),
-            CompactLength::AUTO_TAG
-                | CompactLength::MAX_CONTENT_TAG
-                | CompactLength::FIT_CONTENT_PX_TAG
-                | CompactLength::FIT_CONTENT_PERCENT_TAG
+            Self::AUTO_TAG
+                | Self::MAX_CONTENT_TAG
+                | Self::FIT_CONTENT_PX_TAG
+                | Self::FIT_CONTENT_PERCENT_TAG
         )
     }
 
@@ -483,7 +483,7 @@ impl CompactLength {
     pub fn uses_percentage(self) -> bool {
         #[cfg(feature = "calc")]
         {
-            matches!(self.tag(), CompactLength::PERCENT_TAG | CompactLength::FIT_CONTENT_PERCENT_TAG) || self.is_calc()
+            matches!(self.tag(), Self::PERCENT_TAG | Self::FIT_CONTENT_PERCENT_TAG) || self.is_calc()
         }
         #[cfg(not(feature = "calc"))]
         {
@@ -500,7 +500,7 @@ impl CompactLength {
         calc_resolver: impl Fn(*const (), f32) -> f32,
     ) -> Option<f32> {
         match self.tag() {
-            CompactLength::PERCENT_TAG => Some(self.value() * parent_size),
+            Self::PERCENT_TAG => Some(self.value() * parent_size),
             #[cfg(feature = "calc")]
             _ if self.is_calc() => Some(calc_resolver(self.0.ptr(), parent_size)),
             _ => None,

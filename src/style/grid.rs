@@ -439,22 +439,22 @@ impl<S: CheapCloneStr> TaffyAuto for GridPlacement<S> {
 }
 impl<S: CheapCloneStr> TaffyGridLine for GridPlacement<S> {
     fn from_line_index(index: i16) -> Self {
-        GridPlacement::<S>::Line(GridLine::from(index))
+        Self::Line(GridLine::from(index))
     }
 }
 impl<S: CheapCloneStr> TaffyGridLine for Line<GridPlacement<S>> {
     fn from_line_index(index: i16) -> Self {
-        Line { start: GridPlacement::<S>::from_line_index(index), end: GridPlacement::<S>::Auto }
+        Self { start: GridPlacement::<S>::from_line_index(index), end: GridPlacement::<S>::Auto }
     }
 }
 impl<S: CheapCloneStr> TaffyGridSpan for GridPlacement<S> {
     fn from_span(span: u16) -> Self {
-        GridPlacement::<S>::Span(span)
+        Self::Span(span)
     }
 }
 impl<S: CheapCloneStr> TaffyGridSpan for Line<GridPlacement<S>> {
     fn from_span(span: u16) -> Self {
-        Line { start: GridPlacement::<S>::from_span(span), end: GridPlacement::<S>::Auto }
+        Self { start: GridPlacement::<S>::from_span(span), end: GridPlacement::<S>::Auto }
     }
 }
 
@@ -713,7 +713,7 @@ impl Line<OriginZeroGridPlacement> {
 /// Represents the start and end points of a GridItem within a given axis
 impl<S: CheapCloneStr> Default for Line<GridPlacement<S>> {
     fn default() -> Self {
-        Line { start: GridPlacement::<S>::Auto, end: GridPlacement::<S>::Auto }
+        Self { start: GridPlacement::<S>::Auto, end: GridPlacement::<S>::Auto }
     }
 }
 
@@ -1516,8 +1516,8 @@ impl<S: CheapCloneStr> GridTemplateComponent<S> {
     /// Convert a `GridTemplateComponent` into a `GridTemplateComponentRef`
     pub fn as_component_ref(&self) -> GenericGridTemplateComponent<S, &GridTemplateRepetition<S>> {
         match self {
-            GridTemplateComponent::Single(size) => GenericGridTemplateComponent::Single(*size),
-            GridTemplateComponent::Repeat(repetition) => GenericGridTemplateComponent::Repeat(repetition),
+            Self::Single(size) => GenericGridTemplateComponent::Single(*size),
+            Self::Repeat(repetition) => GenericGridTemplateComponent::Repeat(repetition),
         }
     }
 }

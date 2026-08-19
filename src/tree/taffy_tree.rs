@@ -60,14 +60,14 @@ pub enum TaffyError {
 impl core::fmt::Display for TaffyError {
     fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
         match self {
-            TaffyError::ChildIndexOutOfBounds { parent, child_index, child_count } => {
+            Self::ChildIndexOutOfBounds { parent, child_index, child_count } => {
                 write!(f, "Index (is {child_index}) should be < child_count ({child_count}) for parent node {parent:?}")
             }
-            TaffyError::InvalidParentNode(parent) => {
+            Self::InvalidParentNode(parent) => {
                 write!(f, "Parent Node {parent:?} is not in the TaffyTree instance")
             }
-            TaffyError::InvalidChildNode(child) => write!(f, "Child Node {child:?} is not in the TaffyTree instance"),
-            TaffyError::InvalidInputNode(node) => write!(f, "Supplied Node {node:?} is not in the TaffyTree instance"),
+            Self::InvalidChildNode(child) => write!(f, "Child Node {child:?} is not in the TaffyTree instance"),
+            Self::InvalidInputNode(node) => write!(f, "Supplied Node {node:?} is not in the TaffyTree instance"),
         }
     }
 }
@@ -166,8 +166,8 @@ pub struct TaffyTree<NodeContext = ()> {
 }
 
 impl Default for TaffyTree {
-    fn default() -> TaffyTree<()> {
-        TaffyTree::new()
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -536,7 +536,7 @@ impl<NodeContext> TaffyTree<NodeContext> {
     /// Creates a new [`TaffyTree`] that can store `capacity` nodes before reallocation
     #[must_use]
     pub fn with_capacity(capacity: usize) -> Self {
-        TaffyTree {
+        Self {
             // TODO: make this method const upstream,
             // so constructors here can be const
             nodes: SlotMap::with_capacity(capacity),

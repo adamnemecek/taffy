@@ -68,16 +68,16 @@ impl GridLine {
 pub struct OriginZeroLine(pub i16);
 
 // Add and Sub with Self
-impl Add<OriginZeroLine> for OriginZeroLine {
+impl Add<Self> for OriginZeroLine {
     type Output = Self;
-    fn add(self, rhs: OriginZeroLine) -> Self::Output {
-        OriginZeroLine(self.0 + rhs.0)
+    fn add(self, rhs: Self) -> Self::Output {
+        Self(self.0 + rhs.0)
     }
 }
-impl Sub<OriginZeroLine> for OriginZeroLine {
+impl Sub<Self> for OriginZeroLine {
     type Output = Self;
-    fn sub(self, rhs: OriginZeroLine) -> Self::Output {
-        OriginZeroLine(self.0 - rhs.0)
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self(self.0 - rhs.0)
     }
 }
 
@@ -85,7 +85,7 @@ impl Sub<OriginZeroLine> for OriginZeroLine {
 impl Add<u16> for OriginZeroLine {
     type Output = Self;
     fn add(self, rhs: u16) -> Self::Output {
-        OriginZeroLine(self.0 + rhs as i16)
+        Self(self.0 + rhs as i16)
     }
 }
 impl AddAssign<u16> for OriginZeroLine {
@@ -96,7 +96,7 @@ impl AddAssign<u16> for OriginZeroLine {
 impl Sub<u16> for OriginZeroLine {
     type Output = Self;
     fn sub(self, rhs: u16) -> Self::Output {
-        OriginZeroLine(self.0 - rhs as i16)
+        Self(self.0 - rhs as i16)
     }
 }
 

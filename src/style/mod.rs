@@ -211,7 +211,7 @@ pub enum Display {
 impl Display {
     /// The default Display mode
     #[cfg(feature = "flexbox")]
-    pub const DEFAULT: Display = Display::Flex;
+    pub const DEFAULT: Self = Self::Flex;
 
     /// The default Display mode
     #[cfg(all(feature = "grid", not(feature = "flexbox")))]
@@ -248,15 +248,15 @@ crate::util::parse::impl_parse_for_keyword_enum!(Display,
 impl core::fmt::Display for Display {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         match self {
-            Display::None => write!(f, "NONE"),
+            Self::None => write!(f, "NONE"),
             #[cfg(feature = "block_layout")]
-            Display::Block => write!(f, "BLOCK"),
+            Self::Block => write!(f, "BLOCK"),
             #[cfg(feature = "block_layout")]
-            Display::FlowRoot => write!(f, "FLOW-ROOT"),
+            Self::FlowRoot => write!(f, "FLOW-ROOT"),
             #[cfg(feature = "flexbox")]
-            Display::Flex => write!(f, "FLEX"),
+            Self::Flex => write!(f, "FLEX"),
             #[cfg(feature = "grid")]
-            Display::Grid => write!(f, "GRID"),
+            Self::Grid => write!(f, "GRID"),
         }
     }
 }
@@ -274,7 +274,7 @@ pub enum BoxGenerationMode {
 
 impl BoxGenerationMode {
     /// The default of BoxGenerationMode
-    pub const DEFAULT: BoxGenerationMode = BoxGenerationMode::Normal;
+    pub const DEFAULT: Self = Self::Normal;
 }
 
 impl Default for BoxGenerationMode {
@@ -426,51 +426,51 @@ pub struct Contain(u8);
 
 impl Contain {
     /// No containment (the default)
-    pub const NONE: Contain = Contain(0);
+    pub const NONE: Self = Self(0);
     /// Layout containment: the box establishes an independent formatting context and is treated
     /// as having no baseline for baseline-alignment purposes.
     /// <https://drafts.csswg.org/css-contain-2/#containment-layout>
-    pub const LAYOUT: Contain = Contain(1 << 0);
+    pub const LAYOUT: Self = Self(1 << 0);
     /// Paint containment: the box establishes an independent formatting context. Its other
     /// effects don't affect layout.
     /// <https://drafts.csswg.org/css-contain-2/#containment-paint>
-    pub const PAINT: Contain = Contain(1 << 1);
+    pub const PAINT: Self = Self(1 << 1);
     /// The containment implied by `contain: content` (`layout paint`, ignoring style containment)
-    pub const CONTENT: Contain = Contain(Contain::LAYOUT.0 | Contain::PAINT.0);
+    pub const CONTENT: Self = Self(Self::LAYOUT.0 | Self::PAINT.0);
 
     /// The default containment (no containment)
-    pub const DEFAULT: Contain = Contain::NONE;
+    pub const DEFAULT: Self = Self::NONE;
 
     /// Returns whether `self` contains all of the containment types in `other`
     #[inline(always)]
-    pub const fn contains(self, other: Contain) -> bool {
+    pub const fn contains(self, other: Self) -> bool {
         self.0 & other.0 == other.0
     }
 
     /// Returns whether `self` contains any of the containment types in `other`
     #[inline(always)]
-    pub const fn intersects(self, other: Contain) -> bool {
+    pub const fn intersects(self, other: Self) -> bool {
         self.0 & other.0 != 0
     }
 
     /// Returns the union of the containment types in `self` and `other`
     #[inline(always)]
-    pub const fn union(self, other: Contain) -> Contain {
-        Contain(self.0 | other.0)
+    pub const fn union(self, other: Self) -> Self {
+        Self(self.0 | other.0)
     }
 
     /// Whether this containment causes the box to establish an independent formatting context
     /// (both layout and paint containment do)
     #[inline(always)]
     pub const fn establishes_independent_formatting_context(self) -> bool {
-        self.intersects(Contain::LAYOUT.union(Contain::PAINT))
+        self.intersects(Self::LAYOUT.union(Self::PAINT))
     }
 
     /// Whether this containment suppresses the box's baseline for baseline-alignment purposes
     /// (layout containment does, paint containment does not)
     #[inline(always)]
     pub const fn suppresses_baseline(self) -> bool {
-        self.contains(Contain::LAYOUT)
+        self.contains(Self::LAYOUT)
     }
 
     /// Whether this containment prevents the box's overflowing content from contributing to an
@@ -478,21 +478,21 @@ impl Contain {
     /// overflow; paint containment clips it)
     #[inline(always)]
     pub const fn contains_scrollable_overflow(self) -> bool {
-        self.intersects(Contain::LAYOUT.union(Contain::PAINT))
+        self.intersects(Self::LAYOUT.union(Self::PAINT))
     }
 }
 
 impl core::ops::BitOr for Contain {
-    type Output = Contain;
+    type Output = Self;
     #[inline(always)]
-    fn bitor(self, rhs: Contain) -> Contain {
+    fn bitor(self, rhs: Self) -> Self {
         self.union(rhs)
     }
 }
 
 impl core::ops::BitOrAssign for Contain {
     #[inline(always)]
-    fn bitor_assign(&mut self, rhs: Contain) {
+    fn bitor_assign(&mut self, rhs: Self) {
         *self = self.union(rhs);
     }
 }
@@ -564,7 +564,7 @@ impl Direction {
     /// Returns true if the direction is right-to-left
     #[inline]
     pub(crate) fn is_rtl(&self) -> bool {
-        matches!(self, Direction::Rtl)
+        matches!(self, Self::Rtl)
     }
 }
 
@@ -757,7 +757,7 @@ pub struct Style<S: CheapCloneStr = DefaultCheapStr> {
 
 impl<S: CheapCloneStr> Style<S> {
     /// The [`Default`] layout, in a form that can be used in const functions
-    pub const DEFAULT: Style<S> = Style {
+    pub const DEFAULT: Self = Self {
         dummy: core::marker::PhantomData,
         display: Display::DEFAULT,
         item_is_table: false,
@@ -837,7 +837,7 @@ impl<S: CheapCloneStr> Style<S> {
 
 impl<S: CheapCloneStr> Default for Style<S> {
     fn default() -> Self {
-        Style::DEFAULT
+        Self::DEFAULT
     }
 }
 

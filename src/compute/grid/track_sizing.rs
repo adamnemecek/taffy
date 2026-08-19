@@ -28,7 +28,7 @@ impl ItemBatcher {
     /// Create a new ItemBatcher for the specified axis
     #[inline(always)]
     fn new(axis: AbstractAxis) -> Self {
-        ItemBatcher { index_offset: 0, axis, current_span: 1, current_is_flex: false }
+        Self { index_offset: 0, axis, current_span: 1, current_is_flex: false }
     }
 
     /// This is basically a manual version of Iterator::next which passes `items`

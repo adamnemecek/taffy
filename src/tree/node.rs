@@ -39,7 +39,7 @@ impl From<usize> for NodeId {
 impl From<NodeId> for usize {
     #[inline]
     fn from(id: NodeId) -> Self {
-        id.0 as usize
+        id.0 as Self
     }
 }
 

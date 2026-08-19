@@ -461,7 +461,7 @@ impl Rect<Dimension> {
     /// Create a new Rect with length values
     #[must_use]
     pub const fn from_length(start: f32, end: f32, top: f32, bottom: f32) -> Self {
-        Rect {
+        Self {
             left: Dimension(CompactLength::length(start)),
             right: Dimension(CompactLength::length(end)),
             top: Dimension(CompactLength::length(top)),
@@ -472,7 +472,7 @@ impl Rect<Dimension> {
     /// Create a new Rect with percentage values
     #[must_use]
     pub const fn from_percent(start: f32, end: f32, top: f32, bottom: f32) -> Self {
-        Rect {
+        Self {
             left: Dimension(CompactLength::percent(start)),
             right: Dimension(CompactLength::percent(end)),
             top: Dimension(CompactLength::percent(top)),

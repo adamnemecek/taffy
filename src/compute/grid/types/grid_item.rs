@@ -103,7 +103,7 @@ impl GridItem {
         parent_justify_items: AlignItems,
         source_order: u16,
     ) -> Self {
-        GridItem {
+        Self {
             node,
             source_order,
             row: row_span,

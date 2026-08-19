@@ -924,22 +924,22 @@ impl DetailedGridTracksInfo {
 
     /// Get the sizes of the gutters
     fn gutters_from_grid_track_layout(grid_tracks: &[GridTrack]) -> Vec<f32> {
-        DetailedGridTracksInfo::grid_track_base_size_of_kind(grid_tracks, GridTrackKind::Gutter)
+        Self::grid_track_base_size_of_kind(grid_tracks, GridTrackKind::Gutter)
     }
 
     /// Get the sizes of the tracks
     fn sizes_from_grid_track_layout(grid_tracks: &[GridTrack]) -> Vec<f32> {
-        DetailedGridTracksInfo::grid_track_base_size_of_kind(grid_tracks, GridTrackKind::Track)
+        Self::grid_track_base_size_of_kind(grid_tracks, GridTrackKind::Track)
     }
 
     /// Construct DetailedGridTracksInfo from TrackCounts and GridTracks
     fn from_grid_tracks_and_track_count(track_count: TrackCounts, grid_tracks: Vec<GridTrack>) -> Self {
-        DetailedGridTracksInfo {
+        Self {
             negative_implicit_tracks: track_count.negative_implicit,
             explicit_tracks: track_count.explicit,
             positive_implicit_tracks: track_count.positive_implicit,
-            gutters: DetailedGridTracksInfo::gutters_from_grid_track_layout(&grid_tracks),
-            sizes: DetailedGridTracksInfo::sizes_from_grid_track_layout(&grid_tracks),
+            gutters: Self::gutters_from_grid_track_layout(&grid_tracks),
+            sizes: Self::sizes_from_grid_track_layout(&grid_tracks),
         }
     }
 }
@@ -973,7 +973,7 @@ impl DetailedGridItemsInfo {
             grid_track_index / 2 + 1
         }
 
-        DetailedGridItemsInfo {
+        Self {
             row_start: to_one_indexed_grid_line(grid_item.row_indexes.start),
             row_end: to_one_indexed_grid_line(grid_item.row_indexes.end),
             column_start: to_one_indexed_grid_line(grid_item.column_indexes.start),
