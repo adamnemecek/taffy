@@ -446,10 +446,7 @@ impl CompactLength {
     pub fn is_max_content_alike(&self) -> bool {
         matches!(
             self.tag(),
-            Self::AUTO_TAG
-                | Self::MAX_CONTENT_TAG
-                | Self::FIT_CONTENT_PX_TAG
-                | Self::FIT_CONTENT_PERCENT_TAG
+            Self::AUTO_TAG | Self::MAX_CONTENT_TAG | Self::FIT_CONTENT_PX_TAG | Self::FIT_CONTENT_PERCENT_TAG
         )
     }
 
